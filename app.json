@@ -1,0 +1,40 @@
+{
+  "name": "Analizador Backend API",
+  "description": "Backend API para sistema de protección del analizador",
+  "repository": "https://github.com/tu-usuario/analizador-backend",
+  "logo": "https://nodejs.org/static/images/logo.svg",
+  "keywords": ["node", "express", "mongodb", "analizador", "api"],
+  "env": {
+    "NODE_ENV": {
+      "description": "Entorno de ejecución",
+      "value": "production"
+    },
+    "MONGODB_URI": {
+      "description": "URI de conexión a MongoDB Atlas",
+      "required": true
+    },
+    "JWT_SECRET": {
+      "description": "Clave secreta para JWT",
+      "required": true
+    },
+    "ADMIN_USERNAME": {
+      "description": "Usuario administrador",
+      "value": "admin"
+    },
+    "ADMIN_PASSWORD": {
+      "description": "Contraseña del administrador",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": [
+    {
+      "plan": "mongolab:sandbox"
+    }
+  ]
+}

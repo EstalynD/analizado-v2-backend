@@ -4,9 +4,11 @@
   "description": "Backend API para sistema de protección del analizador",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node start.js",
+    "start:direct": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "seed": "node src/seed.js"
+    "seed": "node src/seed.js",
+    "heroku-postbuild": "echo 'Build completado'"
   },
   "dependencies": {
     "express": "^4.18.2",
