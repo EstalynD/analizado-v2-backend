@@ -5,10 +5,10 @@ const Settings = require('../models/Settings');
 
 const router = express.Router();
 
-// Rate limiting para prevenir fuerza bruta
+// Rate limiting básico
 const validationLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 10, // máximo 10 intentos por IP
+  max: 20, // máximo 20 intentos por IP
   message: {
     error: 'Demasiados intentos de validación. Intenta nuevamente en 15 minutos.',
     code: 'RATE_LIMIT_EXCEEDED'

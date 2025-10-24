@@ -47,7 +47,7 @@ app.use('/api/validate', validationRoutes);
 app.use('/api/codes', authMiddleware, codesRoutes);
 app.use('/api/settings', authMiddleware, settingsRoutes);
 
-// Ruta de salud
+// Ruta de salud simple
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
