@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth');
 const codesRoutes = require('./routes/codes');
 const validationRoutes = require('./routes/validation');
 const settingsRoutes = require('./routes/settings');
+const reportsRoutes = require('./routes/reports');
 
 // Importar middleware
 const authMiddleware = require('./middleware/auth');
@@ -42,6 +43,7 @@ app.set('trust proxy', 1);
 // Rutas públicas
 app.use('/api/auth', authRoutes);
 app.use('/api/validate', validationRoutes);
+app.use('/api/reports', reportsRoutes);
 
 // Rutas protegidas
 app.use('/api/codes', authMiddleware, codesRoutes);
