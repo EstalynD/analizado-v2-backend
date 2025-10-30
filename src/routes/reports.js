@@ -4,6 +4,27 @@ const Report = require('../models/Report');
 
 const router = express.Router();
 
+// Determinar URL del frontend según el entorno
+// En Heroku, detectamos producción por la presencia de variables específicas de Heroku o NODE_ENV=production
+const isProduction = process.env.NODE_ENV === 'production' || 
+                     process.env.DYNO || // Heroku agrega esta variable
+                     process.env.HEROKU_APP_NAME; // Variable opcional de Heroku
+
+const getFrontendUrl = () => {
+  // Si hay una variable de entorno explícita, usarla
+  if (process.env.FRONTEND_URL) {
+    return process.env.FRONTEND_URL;
+  }
+  
+  // Si estamos en producción, usar la URL de producción de Vercel
+  if (isProduction) {
+    return 'https://analizado-v2-frontend.vercel.app';
+  }
+  
+  // Por defecto, desarrollo local
+  return 'http://localhost:3071';
+};
+
 // Rate limiting para creación de reportes
 const createReportLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
@@ -49,9 +70,16 @@ router.post('/', createReportLimiter, async (req, res) => {
 
     await report.save();
 
-    // Retornar el reportId y el enlace público
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3071';
+    // Retornar el reportId y el enlace público usando la URL correcta según el entorno
+    const frontendUrl = getFrontendUrl();
     const publicLink = `${frontendUrl}/report/${report.reportId}`;
+
+    // Log para debugging (solo en desarrollo)
+    if (!isProduction) {
+      console.log(`📝 Generando enlace para reporte ${report.reportId}`);
+      console.log(`🌐 Frontend URL: ${frontendUrl}`);
+      console.log(`🔗 Enlace público: ${publicLink}`);
+    }
 
     res.status(201).json({
       success: true,
